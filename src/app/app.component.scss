@@ -1,0 +1,39 @@
+.blue{
+    background-color: #09f;
+    font-weight: 100;
+    color:white;
+}
+
+.container{
+    padding: 3em;
+}
+
+.result{
+    border: 1px solid black;
+    width:90%;
+    border-radius: 0.5%;
+    margin-right: auto;
+    margin-left: auto;
+    padding:1%;
+}
+
+.result li{
+    list-style-type: none;
+    display:inline-block;
+    width:30%;
+    padding:1%;
+    vertical-align: top;
+    background-color: #eee;    
+    margin:0.2%;
+    text-align: left;
+}
+
+.button-row{
+    text-align: right;
+    padding-right: 10%;;
+}
+
+.button-row button{
+    margin:0.5%;
+}
+
