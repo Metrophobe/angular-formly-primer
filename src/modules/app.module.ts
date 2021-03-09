@@ -9,25 +9,36 @@ import { FormlyMaterialModule } from '@ngx-formly/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatInputModule } from '@angular/material/input';
+import { AutocompleteComponent } from 'src/customcontrols/autocomplete.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent, 
+    AutocompleteComponent
   ],
   imports: [
+    BrowserAnimationsModule,
+    ReactiveFormsModule,
     MatButtonModule,
     MatToolbarModule,
+    MatInputModule, 
+    MatAutocompleteModule,
     BrowserModule,
     AppRoutingModule,
-    ReactiveFormsModule,
     FormlyModule.forRoot({
+      types: [{
+        name: 'autocomplete',
+        component: AutocompleteComponent,
+        wrappers: ['form-field'],
+      }],
       extras: {
         lazyRender: true
       }
     }),
-    FormlyMaterialModule,
-    BrowserAnimationsModule
+    FormlyMaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]

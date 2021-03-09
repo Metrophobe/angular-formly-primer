@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, ValidationErrors } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { DataService } from 'src/services/data.service';
 import { startWith, switchMap } from 'rxjs/operators';
-import { FormlyValidationMessage } from '@ngx-formly/core/lib/templates/formly.validation-message';
+
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,10 @@ import { FormlyValidationMessage } from '@ngx-formly/core/lib/templates/formly.v
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'Ex1 - Simple Form';
+  nations = [];
+
+
+  title = 'Ex3 - Autocomplete';
 
   //Form Essentials
   firstForm: FormGroup;
@@ -26,6 +30,7 @@ export class AppComponent {
       id: '123456',
       firstName: 'Metrophobe',
       age: 34,
+      countryAutocomplete: {},
       email: '123@google.com',
       nationId: 2,
       cityId: 8
@@ -73,7 +78,7 @@ export class AppComponent {
           label: 'email',
           required: true,
           //some pattern matching :) 
-          pattern:  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+          pattern: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
         },
         validation:{
           messages:{
@@ -92,11 +97,24 @@ export class AppComponent {
       }
       },
       {
+        key: 'countryAutocomplete',
+        type: 'autocomplete',
+        templateOptions: {
+          required: true,
+          label: 'Country Autocomplete',
+          placeholder: 'please start typing....',
+          displayLabel: (v) => (v) ? v.label : v,
+          filter: (term) => {
+            return  typeof(term)==="string" ? of(this.nations.filter(n => n.label.toLowerCase().indexOf(term.toLowerCase())===0))  : of([term]);
+          }
+       },
+      },
+      {
         key: 'nationId',
         type: 'select',
         templateOptions: {
           label: 'Nation',
-          options: this.ds.getNations()
+          options: this.ds.getNations(),
         },
         hooks: {
           //these can be done per control level and there are various hooks (similar to angular....)
@@ -131,7 +149,8 @@ export class AppComponent {
 
   //remember to initialise any services and formgroups 
   constructor(private ds: DataService) {
-    this.init();
+     ds.getNations().subscribe(n => this.nations = n);
+     this.init();
   }
 
   //prints the model that is submitted...... 
@@ -139,7 +158,6 @@ export class AppComponent {
     if (valid) { //if form submission had no errors ....
       console.table(value); //....log the output ... 
     }
-
   }
 }
 

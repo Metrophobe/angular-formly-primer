@@ -17,7 +17,13 @@ export class DataService {
       { value: 3, label: "Scotland" },
       { value: 4, label: "Egypt" },
       { value: 5, label: "France" },
-      { value: 6, label: "England" }
+      { value: 6, label: "England" },
+      { value: 7, label: "Indonesia" },
+      { value: 8, label: "Monaco" },
+      { value: 9, label: "Malaysia" },
+      { value: 10, label: "Malta" },
+      { value: 11, label: "Mali" },
+      { value: 12, label: "Malawi" }
     ]);
   }
 
@@ -30,7 +36,7 @@ export class DataService {
       { value: 4, label: "Glassgow", nationId: 3 },
       { value: 5, label: "Cairo", nationId: 4 },
       { value: 6, label: "Paris", nationId: 5 },
-      { value: 7, label: "Londong", nationId: 6 },
+      { value: 7, label: "London", nationId: 6 },
       { value: 8, label: "Munich", nationId: 2 }
     ].filter(city => {
       if(id) {
